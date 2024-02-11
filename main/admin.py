@@ -1,0 +1,12 @@
+from django.contrib import admin
+from .models import MyBlogs, Author, Comment, Interiors, Exteriors
+
+admin.site.register(MyBlogs)
+
+admin.site.register(Author)
+
+admin.site.register(Comment)
+
+admin.site.register(Interiors)
+
+admin.site.register(Exteriors)
