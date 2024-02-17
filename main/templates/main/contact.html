@@ -28,6 +28,8 @@
 
       <header class="pd-20px" style="z-index: 9999;">
 
+         
+
         
          <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5">
              <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
@@ -114,14 +116,55 @@
                      </div>
 
                      <div class="form-wrapper w-form">
-                        <form id="wf-form-Contact-Form" name="wf-form-Contact-Form" data-name="Contact Form" method="get" class="form" data-wf-page-id="64da296e1d11a292e283a7a4" data-wf-element-id="c99f787c-31e0-0682-74de-bbfee7f8f90c">
+                        <form id="wf-form-Contact-Form" name="wf-form-Contact-Form" onsubmit="submitForm()" data-name="Contact Form" method="post"  class="form" data-wf-page-id="64da296e1d11a292e283a7a4" data-wf-element-id="c99f787c-31e0-0682-74de-bbfee7f8f90c">
+                           {% csrf_token %}
                            <div class="contact-form-grid">
-                              <div class="form-field-wrapper"><label for="Name" class="form-label">Name *</label><input class="form-input w-input" maxlength="256" name="Name-2" data-name="Name 2" placeholder="John Doe" type="text" id="Name-2" required=""/></div>
-                              <div class="form-field-wrapper"><label for="Email" class="form-label">Email ADdress *</label><input class="form-input w-input" maxlength="256" name="Email-2" data-name="Email 2" placeholder="email@example.com" type="email" id="Email-2" required=""/></div>
+                               <div class="form-field-wrapper">
+                                   <label for="Name" class="form-label">Name *</label>
+                                   <input class="form-input w-input" maxlength="256" name="Name" data-name="Name 2" placeholder="John Doe" type="text" id="Name" required="">
+                               </div>
+                               <div class="form-field-wrapper">
+                                   <label for="PhoneNumber" class="form-label">Phone Number *</label>
+                                   <input class="form-input w-input" maxlength="20" name="PhoneNumber" data-name="PhoneNumber" placeholder="Enter your phone number" type="tel" id="PhoneNumber" required="">
+                               </div>
                            </div>
-                           <div class="form-field-wrapper"><label for="Message" class="form-label">Message *</label><input class="form-input is-text-area w-input" maxlength="256" name="Message-2" data-name="Message 2" placeholder="Your Message" type="text" id="Message-2" required=""/></div>
-                           <div class="contact-form-button-wrapper"><input type="submit" data-wait="Please wait..." class="button primary w-button" value="Send Message"/></div>
-                        </form>
+                           <div class="form-field-wrapper">
+                               <label for="Message" class="form-label">Message *</label>
+                               <input class="form-input is-text-area w-input" maxlength="256" name="Message" data-name="Message" placeholder="Your Message" type="text" id="Message" required="">
+                           </div>
+                           <div class="contact-form-button-wrapper">
+                              <button type="submit" data-wait="Please wait..." class="button primary w-button">Send Message</button>
+                          </div>
+                       </form>
+
+
+
+                       <script>
+                              function submitForm() {
+                                 var form = document.getElementById("wf-form-Contact-Form");
+                                 var formData = new FormData(form);
+                                 var xhr = new XMLHttpRequest();
+                                 xhr.open("POST", "https://docs.google.com/forms/d/e/1FAIpQLSfF7QyxMNwVMx8J7tBeO_JhjXrX-KD9rqonmbL9qgnj3cQH-A/formResponse", true);
+                                 xhr.onreadystatechange = function() {
+                                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                          // Действия при успешной отправке формы
+                                          alert("Form submitted successfully!");
+                                          // Optionally, reset the form after successful submission
+                                          console.log(xhr.responseText);
+                                          form.reset();
+                                    } else {
+                                          // Действия при ошибке отправки формы
+                                          console.log(xhr.responseText);
+                                          alert("An error occurred while submitting the form.");
+                                    }
+                                 };
+                                 xhr.send(formData);
+                              }
+                        </script>
+                        
+                       
+
+                       
                         <div class="form-message-success w-form-done">
                            <div>Thank you! Your submission has been received!</div>
                         </div>
@@ -268,9 +311,13 @@
                </div>
             </div>
          </div>
+
+<iframe class="w-300" id="map_785161143" frameborder="0" width="100%" height="600px" sandbox="allow-modals allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation-by-user-activation"></iframe><script type="text/javascript">(function(e,t){var r=document.getElementById(e);r.contentWindow.document.open(),r.contentWindow.document.write(atob(t)),r.contentWindow.document.close()})("map_785161143", "PGJvZHk+PHN0eWxlPgogICAgICAgIGh0bWwsIGJvZHkgewogICAgICAgICAgICBtYXJnaW46IDA7CiAgICAgICAgICAgIHBhZGRpbmc6IDA7CiAgICAgICAgfQogICAgICAgIGh0bWwsIGJvZHksICNtYXAgewogICAgICAgICAgICB3aWR0aDogMTAwJTsKICAgICAgICAgICAgaGVpZ2h0OiAxMDAlOwogICAgICAgIH0KICAgICAgICAuYnVsbGV0LW1hcmtlciB7CiAgICAgICAgICAgIHdpZHRoOiAyMHB4OwogICAgICAgICAgICBoZWlnaHQ6IDIwcHg7CiAgICAgICAgICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7CiAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmY7CiAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgMXB4IDNweCAwIHJnYmEoMCwgMCwgMCwgMC4yKTsKICAgICAgICAgICAgYm9yZGVyOiA0cHggc29saWQgIzAyODFmMjsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogNTAlOwogICAgICAgIH0KICAgICAgICAucGVybWFuZW50LXRvb2x0aXAgewogICAgICAgICAgICBiYWNrZ3JvdW5kOiBub25lOwogICAgICAgICAgICBib3gtc2hhZG93OiBub25lOwogICAgICAgICAgICBib3JkZXI6IG5vbmU7CiAgICAgICAgICAgIHBhZGRpbmc6IDZweCAxMnB4OwogICAgICAgICAgICBjb2xvcjogIzI2MjYyNjsKICAgICAgICB9CiAgICAgICAgLnBlcm1hbmVudC10b29sdGlwOmJlZm9yZSB7CiAgICAgICAgICAgIGRpc3BsYXk6IG5vbmU7CiAgICAgICAgfQogICAgICAgIC5kZy1wb3B1cF9oaWRkZW5fdHJ1ZSB7CiAgICAgICAgICAgIGRpc3BsYXk6IGJsb2NrOwogICAgICAgIH0KICAgICAgICAubGVhZmxldC1jb250YWluZXIgLmxlYWZsZXQtcG9wdXAgLmxlYWZsZXQtcG9wdXAtY2xvc2UtYnV0dG9uIHsKICAgICAgICAgICAgdG9wOiAwOwogICAgICAgICAgICByaWdodDogMDsKICAgICAgICAgICAgd2lkdGg6IDIwcHg7CiAgICAgICAgICAgIGhlaWdodDogMjBweDsKICAgICAgICAgICAgZm9udC1zaXplOiAyMHB4OwogICAgICAgICAgICBsaW5lLWhlaWdodDogMTsKICAgICAgICB9CiAgICA8L3N0eWxlPjxkaXYgaWQ9Im1hcCI+PC9kaXY+PHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiIHNyYz0iaHR0cHM6Ly9tYXBzLmFwaS4yZ2lzLnJ1LzIuMC9sb2FkZXIuanM/cGtnPWZ1bGwmYW1wO3NraW49bGlnaHQiPjwvc2NyaXB0PjxzY3JpcHQ+KGZ1bmN0aW9uKGUpe3ZhciB0PUpTT04ucGFyc2UoZSkscj10Lm9yZGVyZWRHZW9tZXRyaWVzLG49dC5tYXBQb3NpdGlvbixhPXQuaXNXaGVlbFpvb21FbmFibGVkO2Z1bmN0aW9uIG8oZSl7cmV0dXJuIGRlY29kZVVSSUNvbXBvbmVudChhdG9iKGUpLnNwbGl0KCIiKS5tYXAoZnVuY3Rpb24oZSl7cmV0dXJuIiUiKygiMDAiK2UuY2hhckNvZGVBdCgwKS50b1N0cmluZygxNikpLnNsaWNlKC0yKX0pLmpvaW4oIiIpKX1ERy50aGVuKGZ1bmN0aW9uKCl7dmFyIGU9REcubWFwKCJtYXAiLHtjZW50ZXI6W24ubGF0LG4ubG9uXSx6b29tOm4uem9vbSxzY3JvbGxXaGVlbFpvb206YSx6b29tQ29udHJvbDohYX0pO0RHLmdlb0pTT04ocix7c3R5bGU6ZnVuY3Rpb24oZSl7dmFyIHQscixuLGEsbztyZXR1cm57ZmlsbENvbG9yOm51bGw9PT0odD1lKXx8dm9pZCAwPT09dD92b2lkIDA6dC5wcm9wZXJ0aWVzLmZpbGxDb2xvcixmaWxsT3BhY2l0eTpudWxsPT09KHI9ZSl8fHZvaWQgMD09PXI/dm9pZCAwOnIucHJvcGVydGllcy5maWxsT3BhY2l0eSxjb2xvcjpudWxsPT09KG49ZSl8fHZvaWQgMD09PW4/dm9pZCAwOm4ucHJvcGVydGllcy5zdHJva2VDb2xvcix3ZWlnaHQ6bnVsbD09PShhPWUpfHx2b2lkIDA9PT1hP3ZvaWQgMDphLnByb3BlcnRpZXMuc3Ryb2tlV2lkdGgsb3BhY2l0eTpudWxsPT09KG89ZSl8fHZvaWQgMD09PW8/dm9pZCAwOm8ucHJvcGVydGllcy5zdHJva2VPcGFjaXR5fX0scG9pbnRUb0xheWVyOmZ1bmN0aW9uKGUsdCl7cmV0dXJuInJhZGl1cyJpbiBlLnByb3BlcnRpZXM/REcuY2lyY2xlKHQsZS5wcm9wZXJ0aWVzLnJhZGl1cyk6REcubWFya2VyKHQse2ljb246ZnVuY3Rpb24oZSl7cmV0dXJuIERHLmRpdkljb24oe2h0bWw6IjxkaXYgY2xhc3M9J2J1bGxldC1tYXJrZXInIHN0eWxlPSdib3JkZXItY29sb3I6ICIrZSsiOyc+PC9kaXY+IixjbGFzc05hbWU6Im92ZXJyaWRlLWRlZmF1bHQiLGljb25TaXplOlsyMCwyMF0saWNvbkFuY2hvcjpbMTAsMTBdfSl9KGUucHJvcGVydGllcy5jb2xvcil9KX0sb25FYWNoRmVhdHVyZTpmdW5jdGlvbihlLHQpe2UucHJvcGVydGllcy5kZXNjcmlwdGlvbiYmdC5iaW5kUG9wdXAobyhlLnByb3BlcnRpZXMuZGVzY3JpcHRpb24pLHtjbG9zZUJ1dHRvbjohMCxjbG9zZU9uRXNjYXBlS2V5OiEwfSksZS5wcm9wZXJ0aWVzLnRpdGxlJiZ0LmJpbmRUb29sdGlwKG8oZS5wcm9wZXJ0aWVzLnRpdGxlKSx7cGVybWFuZW50OiEwLG9wYWNpdHk6MSxjbGFzc05hbWU6InBlcm1hbmVudC10b29sdGlwIn0pfX0pLmFkZFRvKGUpfSl9KSgneyJvcmRlcmVkR2VvbWV0cmllcyI6W3sidHlwZSI6IkZlYXR1cmUiLCJwcm9wZXJ0aWVzIjp7ImNvbG9yIjoiIzAyODFmMiIsInRpdGxlIjoiIiwiZGVzY3JpcHRpb24iOiIiLCJ6SW5kZXgiOjEwMDAwMDAwMDB9LCJnZW9tZXRyeSI6eyJ0eXBlIjoiUG9pbnQiLCJjb29yZGluYXRlcyI6Wzc2Ljk0Nzk0Miw0My4zMzQwNzhdfSwiaWQiOjU5OX0seyJ0eXBlIjoiRmVhdHVyZSIsInByb3BlcnRpZXMiOnsiY29sb3IiOiIjMDI4MWYyIiwidGl0bGUiOiIiLCJkZXNjcmlwdGlvbiI6IiIsInpJbmRleCI6MTAwMDAwMDAwMH0sImdlb21ldHJ5Ijp7InR5cGUiOiJQb2ludCIsImNvb3JkaW5hdGVzIjpbNzYuOTQ3OTQyLDQzLjMzNDA3OF19LCJpZCI6MTExM30seyJ0eXBlIjoiRmVhdHVyZSIsInByb3BlcnRpZXMiOnsiY29sb3IiOiIjMDI4MWYyIiwidGl0bGUiOiIiLCJkZXNjcmlwdGlvbiI6IiIsInpJbmRleCI6MTAwMDAwMDAwMH0sImdlb21ldHJ5Ijp7InR5cGUiOiJQb2ludCIsImNvb3JkaW5hdGVzIjpbNzYuOTQ3OTQyLDQzLjMzNDA3OF19LCJpZCI6MTIwMX1dLCJtYXBQb3NpdGlvbiI6eyJsYXQiOjQzLjMzNDA5ODA0OTA1Nzg2NCwibG9uIjo3Ni45NDc5NzkzMzEwMTY1NSwiem9vbSI6MTh9LCJpc1doZWVsWm9vbUVuYWJsZWQiOnRydWV9Jyk8L3NjcmlwdD48c2NyaXB0IGFzeW5jPSIiIHR5cGU9InRleHQvamF2YXNjcmlwdCIgc3JjPSJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbS9ndGFnL2pzP2lkPVVBLTE1ODg2NjE2OC0xIj48L3NjcmlwdD48c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCI+KGZ1bmN0aW9uKGUpe2Z1bmN0aW9uIHQoKXtkYXRhTGF5ZXIucHVzaChhcmd1bWVudHMpfXdpbmRvdy5kYXRhTGF5ZXI9d2luZG93LmRhdGFMYXllcnx8W10sdCgianMiLG5ldyBEYXRlKSx0KCJjb25maWciLGUpLHdpbmRvdy5ndGFnPXR9KSgnVUEtMTU4ODY2MTY4LTEnKTwvc2NyaXB0PjwvYm9keT4=")</script>
+
+
       </footer>
 
-
+      
 
       <!-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script> -->
       <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>

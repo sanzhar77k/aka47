@@ -3,6 +3,13 @@ from .models import MyBlogs
 from .models import Interiors
 from .models import Exteriors
 from .forms import CommentForm
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.conf import settings
+import requests
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 
 def index(request):
@@ -75,3 +82,36 @@ def exterior_page(request):
 def exterior_detail(request, exterior_id):
     exterior = get_object_or_404(Exteriors, pk=exterior_id)
     return render(request, 'main/projectExterior.html', {'exterior': exterior, 'exterior_id': exterior_id})
+
+
+# @csrf_exempt
+# def contact_form(request):
+#     if request.method == 'POST':
+#         name = request.POST.get('Name')
+#         phone_number = request.POST.get('PhoneNumber')
+#         message = request.POST.get('Message')
+
+#         # Словарь с данными, которые вы хотите отправить в Google Forms
+#         form_data = {
+#             'Имя': name,
+#             'Номер': phone_number,
+#             'Вопрос': message
+#         }
+
+#         print(form_data)  # Отладочный вывод
+
+#         # URL вашей Google Forms
+#         google_forms_url = 'https://docs.google.com/forms/d/e/1FAIpQLSfF7QyxMNwVMx8J7tBeO_JhjXrX-KD9rqonmbL9qgnj3cQH-A/viewform?usp=sf_link'
+
+#         # Отправка данных в Google Forms
+#         response = requests.post(google_forms_url, data=form_data)
+
+#         # Перенаправление на страницу с благодарностью после успешной отправки формы
+#         if response.status_code == 200:
+#             print(response.text)
+#             return render(request, 'main/contact.html')
+#         else:
+#             print(response.text)
+#             return render(request, 'main/services.html')
+
+#     return render(request, 'main/contact.html')
