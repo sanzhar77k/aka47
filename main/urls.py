@@ -13,7 +13,4 @@ urlpatterns = [
     path('exterior', views.exterior_page, name='exterior_page'),
     path('exterior/<int:exterior_id>/', views.exterior_detail, name='exterior_detail'),
     path('blog/<int:blog_id>/comment/', views.add_comment, name='add_comment'),
-    # path('contact_form', views.contact_form, name='contact_form'),
-    # path('submit/', views.submit_form, name='submit_form'),
-
 ]
